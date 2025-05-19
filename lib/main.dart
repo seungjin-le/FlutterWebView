@@ -3,10 +3,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:get/get.dart';
-import 'package:web_view_test/route/router.dart';
-import 'package:web_view_test/screens/home_screen.dart';
-import 'package:web_view_test/screens/web_view_screen.dart';
+
+import 'route/router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +21,9 @@ Future<void> main() async {
       'Failed to find an installed WebView2 runtime or non-stable Microsoft Edge installation.',
     );
 
-    webViewEnvironment = await WebViewEnvironment.create(settings: WebViewEnvironmentSettings(userDataFolder: ''));
+    webViewEnvironment = await WebViewEnvironment.create(
+      settings: WebViewEnvironmentSettings(userDataFolder: ''),
+    );
   }
 
   if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
@@ -37,6 +37,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(title: 'WebView', initialRoute: AppRoutes.home, getPages: AppRoutes.routes, home: Home());
+    return MaterialApp.router(routerConfig: router, title: 'WebView');
   }
 }

@@ -1,17 +1,70 @@
-// GetX 라우트 설정
-import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:web_view_test/screens/home_screen.dart';
-import 'package:web_view_test/screens/test2_screen.dart';
-import 'package:web_view_test/screens/test_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class AppRoutes {
-  static const String home = '/';
-  static const String test = '/test';
-  static const String test2 = '/test2';
+import '../screens/web_view_screen.dart';
 
-  static final routes = [
-    GetPage(name: home, page: () => const Home()),
-    GetPage(name: test, page: () => const Test()),
-    GetPage(name: test2, page: () => const Test2()),
-  ];
-}
+final router = GoRouter(
+  routes: [
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return Scaffold(
+          body: SafeArea(child: navigationShell),
+          bottomNavigationBar: BottomAppBar(
+            color: Colors.red,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+              children: [
+                IconButton(
+                  onPressed: () {
+                    context.go('/');
+                  },
+                  icon: const Icon(Icons.home),
+                ),
+                IconButton(
+                  onPressed: () {
+                    context.go('/attacker');
+                  },
+                  icon: const Icon(Icons.arrow_forward),
+                ),
+                IconButton(
+                  onPressed: () {
+                    context.go('/buffer');
+                  },
+                  icon: const Icon(Icons.refresh),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/',
+              builder: (context, state) => WebViewScreen(url: '/'),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/attacker',
+              builder: (context, state) => WebViewScreen(url: '/attacker'),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/buffer',
+              builder: (context, state) => WebViewScreen(url: '/buffer'),
+            ),
+          ],
+        ),
+      ],
+    ),
+  ],
+);
