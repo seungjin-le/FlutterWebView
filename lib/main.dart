@@ -1,17 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-
+import 'package:web_view_test/route/router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  WebViewEnvironment? webViewEnvironment;
-
-  if (Platform.isAndroid) {
-    await InAppWebViewController.setWebContentsDebuggingEnabled(true);
-  }
 
   if (!kIsWeb && defaultTargetPlatform == TargetPlatform.windows) {
     final availableVersion = await WebViewEnvironment.getAvailableVersion();
@@ -20,7 +13,7 @@ Future<void> main() async {
       'Failed to find an installed WebView2 runtime or non-stable Microsoft Edge installation.',
     );
 
-    webViewEnvironment = await WebViewEnvironment.create(
+    await WebViewEnvironment.create(
       settings: WebViewEnvironmentSettings(userDataFolder: ''),
     );
   }

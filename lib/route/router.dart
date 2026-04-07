@@ -24,7 +24,7 @@ final router = GoRouter(
                 ),
                 IconButton(
                   onPressed: () {
-                    context.go('/attacker');
+                    context.go('/attacker');  
                   },
                   icon: const Icon(Icons.arrow_forward),
                 ),
